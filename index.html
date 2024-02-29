@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Useful Links</title>
+    <style>
+        h1 {
+            color: blue;
+        }
+
+        .component-links {
+            display: none;
+        }
+
+        .component-links.active {
+            display: block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+    <script>
+        function toggleComponentLinks(componentId) {
+            var links = document.getElementById(componentId);
+            links.classList.toggle("active");
+        }
+
+        function generateServiceLinks(envName) {
+            const suffix = envName.toLowerCase() + '.peer39dom.com/swagger-ui/#/';
+            const offlineSuffix =envName.toLowerCase() + '.peer39dom.com:8080/swagger-ui/#/';
+            const services = {
+                'PlatformUI': 'http://platform.k8s.' + envName.toLowerCase() + '.peer39dom.com/login',
+                'SymphonyUI': 'http://' + envName.toLowerCase() + '-symphony01.' + envName.toLowerCase() + '.peer39dom.com:8080/SymphonyService/SymphonyService.html',
+                'TaxonomyUI': 'http://taxonomy-management.k8s.' + envName.toLowerCase() + '.peer39dom.com/login',
+                'OrgCmsUI': 'http://' + envName.toLowerCase() + '-orgcmsui01.'+ envName.toLowerCase() + '.peer39dom.com:8080/OrgcmsService/OrgcmsService.html',
+
+                'swagger': {
+                    'suffix': '.peer39dom.com/swagger-ui/#/',
+                    'additionalLinks': [
+                        //http://mobile-reader.k8s.stg.peer39dom.com/swagger-ui/#/
+                        {'name': 'Mobile Reader', 'url': 'http://mobile-reader.k8s.' + suffix},
+                        {'name': 'Mobile Classifier', 'url': 'http://mobile-classifier.k8s.' + suffix},
+                        {'name': 'App Pender', 'url': 'http://app-pender.k8s.' + suffix},
+                        {'name': 'Log Manager', 'url': 'http://logs-manager.k8s.' + suffix},
+                        {'name': 'Weather', 'url': 'http://weather.k8s.' + suffix},
+                        {'name': 'Feed Enrichment', 'url': 'http://feed-enrichment-service.k8s.' + suffix},
+                        {'name': 'Advanced Rule', 'url': 'http://advanced-rule-service.k8s.' + suffix},
+                        {'name': 'Zip Code Categorisation', 'url': 'http://zip-code-categorisation.k8s.' + suffix},
+                        {'name': 'Grabber Gateway', 'url': 'http://grabber-gateway.k8s.' + suffix},
+                        {'name': 'Ctv Guide', 'url': 'http://ctv-guide-service.k8s.' + suffix},
+                        {'name': 'Category MNG', 'url': 'http://platform-categories.k8s.' + suffix},
+                        {'name': 'Taxonomy UI', 'url': 'http://localhost:8080/swagger-ui/index.html'},
+                        {'name': 'Mobile Reader', 'url': 'http://mobile-reader.k8s.' + suffix},
+                        {'name': 'Mobile Classifier', 'url': 'http://mobile-classifier.k8s.' + suffix},
+                        {'name': 'App Pender', 'url': 'http://app-pender.k8s.' + suffix},
+                        {'name': 'Mobile Reader', 'url': 'http://mobile-reader.k8s.' + suffix},
+                        {'name': 'Mobile Classifier', 'url': 'http://mobile-classifier.k8s.' + suffix},
+                        {'name': 'App Pender', 'url': 'http://app-pender.k8s.' + suffix},
+                        {'name': 'Advertiser', 'url': 'http://' + envName.toLowerCase() + '-adv01.' + offlineSuffix},
+                        {'name': 'Controller', 'url': 'http://' + envName.toLowerCase() + '-ctrl01.' + offlineSuffix},
+                        {'name': 'Classifier', 'url': 'http://' + envName.toLowerCase() + '-cls01.' + offlineSuffix},
+                        {'name': 'DataOrigin', 'url': 'http://' + envName.toLowerCase() + '-do01.' + offlineSuffix},
+                        {'name': 'Grabber', 'url': 'http://' + envName.toLowerCase() + '-grb01.' + offlineSuffix},
+                        {'name': 'Pender', 'url': 'http://' + envName.toLowerCase() + '-pnd01.' + offlineSuffix}
+                    ]
+                }
+            };
+            var linksHtml = '';
+            for (var service in services) {
+                if (service === 'swagger') {
+                    linksHtml += '<li class="dropdown"><a href="#">Swagger</a><div class="dropdown-content">';
+                    for (var i = 0; i < services[service].additionalLinks.length; i++) {
+                        var linkUrl = services[service].additionalLinks[i].url;
+                        linksHtml += '<a href="' + linkUrl + '">' + services[service].additionalLinks[i].name + '</a>';
+                    }
+                    linksHtml += '</div></li>';
+                } else {
+                    linksHtml += '<li><a href="' + services[service] + '">' + service + '</a></li>';
+                }
+            }
+            return linksHtml;
+        }
+    </script>
+</head>
+<body>
+<h1>Useful Links</h1>
+<ul>
+    <li><a href="http://env-status.k8s.uat.peer39dom.com/#!/view3">DashboardUI</a></li>
+    <li><a href="https://consul.peer39dom.com/ui/dc1/kv">ConsulUI</a></li>
+    <li><a href="http://rabbitmq.k8s.uat.peer39dom.com:15672/#/">Rabbit MQ</a></li>
+    <li><a href="http://stg-activemq01.stg.peer39dom.com:8161/admin/queues.jsp">Active MQ</a></li>
+
+</ul>
+<h1>Environment Components</h1>
+<p>Click on the environment name to see the list of services:</p>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksStg')">Stg</a></h2>
+    <div id="componentLinksStg" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Stg'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksUat')">Uat</a></h2>
+    <div id="componentLinksUat" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Uat'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksMarvel')">Marvel</a></h2>
+    <div id="componentLinksMarvel" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Marvel'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksApex')">Apex</a></h2>
+    <div id="componentLinksApex" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Apex'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksSparta')">Sparta</a></h2>
+    <div id="componentLinksSparta" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Sparta'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksByte')">Byte</a></h2>
+    <div id="componentLinksByte" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Byte'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksWebo')">Webo</a></h2>
+    <div id="componentLinksWebo" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Webo'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksBoozi')">Boozi</a></h2>
+    <div id="componentLinksBoozi" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Boozi'));
+            </script>
+        </ul>
+    </div>
+</div>
+<div>
+    <h2><a href="#" onclick="toggleComponentLinks('componentLinksBina')">Bina</a></h2>
+    <div id="componentLinksBina" class="component-links">
+        <h3>Services</h3>
+        <ul>
+            <!-- Dynamically generate environment-specific service links -->
+            <script>
+                document.write(generateServiceLinks('Bina'));
+            </script>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
